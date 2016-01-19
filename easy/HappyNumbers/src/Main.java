@@ -1,7 +1,9 @@
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Main {
+
+    static ArrayList<Integer> digits = new ArrayList<Integer>();
 
     public static void main(String[] args) throws IOException {
 
@@ -25,37 +27,39 @@ public class Main {
 
     public static boolean isHappyNumber(String num) {
 
-        int loop = 10000;
+        Set<Integer> checked = new HashSet<Integer>();
         int sum = Integer.parseInt(num);
         do {
 
-            if (--loop == 0) return false;
+            //endless loop, break
+            if (checked.contains(sum)) return false;
+            checked.add(sum);
 
-            //parse num into digits
-            ArrayList<Integer> digits = convertNumberToDigits(Integer.toString(sum));
+            //extract digits from sum
+            extractDigits(sum);
 
-            //reset sum
             sum = 0;
 
             //square each digit and add to sum
             for (Integer digit : digits) {
                 sum = sum + digit * digit;
             }
+
+            digits.clear();
+
         } while (sum != 1);
 
+        checked.clear();
         return true;
     }
 
-    public static ArrayList<Integer> convertNumberToDigits(String num) {
-
-        //separate string num into digits
-        ArrayList<Integer> digits = new ArrayList<Integer>();
-        for (int i = 0; i < num.length(); i++) {
-            digits.add(Character.getNumericValue(num.charAt(i)));
-        }
-
-        return digits;
+    public static void extractDigits(int num) {
+        do {
+            digits.add(num % 10);
+            num /= 10;
+        } while (num >= 1);
     }
+
 }
 
 
