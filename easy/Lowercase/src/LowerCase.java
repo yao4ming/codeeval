@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class LowerCase {
-    
+
     public static void main(String[] args) {
         File file = new File(args[0]);
 
