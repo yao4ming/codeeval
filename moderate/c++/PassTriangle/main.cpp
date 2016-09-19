@@ -11,10 +11,15 @@ public:
         this->val = val;
         traversed = false;
         left = right =  NULL;
+        sum = 0;
     }
 
     ~Node() {
+        if (left != NULL)
+            delete[](left);
 
+        if (right != NULL)
+            delete[](right);
     }
 
     int val;
@@ -25,27 +30,6 @@ public:
 };
 
 Node* root = NULL;
-
-string trim(string str) {
-    string trimmedStr;
-    int i, j;
-
-    //trim left end
-    for (i= 0; i < str.size(); ++i) {
-        if (str[i] != ' ')
-            break;
-    }
-
-    trimmedStr = str.substr(i);
-
-    //trim right end
-    for (j = trimmedStr.size()-1; j >= 0 ; --j) {
-        if (trimmedStr[j] != ' ')
-            break;
-    }
-
-    return trimmedStr.substr(0, j+1);
-}
 
 void initTriangle(string file) {
 
@@ -61,7 +45,6 @@ void initTriangle(string file) {
 
     //read line/level
     while (getline(in, line)) {
-        line = trim(line);
 
         stringstream ss(line);
         string token;
